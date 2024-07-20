@@ -42,13 +42,14 @@ def run(filename, keywordColumn):
     totalKeywords = len(searchList)
     for index, keyword in enumerate(searchList):
         try:
-            logging.info(f"{index}/{totalKeywords} Fetching data for {keyword}")
+            logging.info(f"{index + 1}/{totalKeywords} Fetching data for {keyword}")
             df.loc[df[keywordColumn] == keyword, DF_PROCESSED] = 'T'
             fetchData(driver, keyword)
             changeFileName(keyword, filename, df)
         except Exception as e:
             logging.info(f"Error fetching data for {keyword}", e)
     driver.close()
+    logging.info("Done!")
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%d-%b-%y %H:%M:%S',
