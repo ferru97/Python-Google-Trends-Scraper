@@ -48,7 +48,7 @@ def run(filename, keywordColumn):
             changeFileName(keyword, filename, df)
         except Exception as e:
             logging.info(f"Error fetching data for {keyword}", e)
-    driver.exit()
+    driver.close()
 
 if __name__ == '__main__':
     logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', datefmt='%d-%b-%y %H:%M:%S',
