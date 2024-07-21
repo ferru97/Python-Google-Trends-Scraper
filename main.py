@@ -8,7 +8,7 @@ import argparse
 INPUT_PATH = "input/"
 OUTPUT_PATH = ""
 DF_PROCESSED = "PROCESSED"
-TRENDS_URL = "https://trends.google.com/trends"
+TRENDS_URL = "https://trends.google.com/trends?hl=en"
 
 def getSearchList(filename, keywordColumn):
     df = readCsv(filename , INPUT_PATH)
@@ -22,6 +22,7 @@ def fetchData(driver, keyword):
     time.sleep(2)
 
     TrendsSeleniumUtils.search(driver, keyword)
+    TrendsSeleniumUtils.selectZone(driver)
     TrendsSeleniumUtils.selectDate(driver)
     TrendsSeleniumUtils.downloadFile(driver)
 
