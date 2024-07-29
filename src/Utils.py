@@ -12,8 +12,9 @@ def getSeleniumInstanceFirefox(downloadDir):
     ua = UserAgent()
     user_agent = ua.random
     options = Options()
-    options.add_argument("user-agent="+user_agent)
-    options.add_argument("user-agent="+user_agent)
+    options.add_argument("start-maximized")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.set_preference('browser.download.folderList', 2)  # custom location
     options.set_preference('browser.download.manager.showWhenStarting', False)
     options.set_preference('browser.download.dir', downloadDir)
