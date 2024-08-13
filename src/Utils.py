@@ -7,7 +7,7 @@ from fake_useragent import UserAgent
 from selenium import webdriver
 
 
-def getSeleniumInstanceFirefox(downloadDir):
+def getSeleniumInstanceFirefox(downloadDir, driver_path):
     os.environ["DBUS_SESSION_BUS_ADDRESS"] = "/dev/null"
     ua = UserAgent()
     user_agent = ua.random
@@ -18,9 +18,11 @@ def getSeleniumInstanceFirefox(downloadDir):
     options.set_preference('browser.download.manager.showWhenStarting', False)
     options.set_preference('browser.download.dir', downloadDir)
     options.set_preference('browser.helperApps.neverAsk.saveToDisk', 'text/csv')
-    firefoxService = Service(GeckoDriverManager().install())
+    if driver_path is None:
+        driver_path = GeckoDriverManager().install()
+    firefoxService = Service(driver_path)
     driver = webdriver.Firefox(service=firefoxService, options=options)
-    return driver
+    return driver, driver_path
 
 def readCsv(fileName, inputDir):
     inputFilePath = os.path.join(inputDir, fileName)

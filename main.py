@@ -38,10 +38,11 @@ def changeFileName(keyword, inputFilename, df):
 
 
 def run(filename, keywordColumn):
-    driver = getSeleniumInstanceFirefox(OUTPUT_PATH)
     df, searchList = getSearchList(filename, keywordColumn)
     totalKeywords = len(searchList)
+    driver_path = None
     for index, keyword in enumerate(searchList):
+        driver, driver_path = getSeleniumInstanceFirefox(OUTPUT_PATH, driver_path)
         try:
             logging.info(f"{index + 1}/{totalKeywords} Fetching data for {keyword}")
             df.loc[df[keywordColumn] == keyword, DF_PROCESSED] = 'T'
@@ -49,7 +50,7 @@ def run(filename, keywordColumn):
             changeFileName(keyword, filename, df)
         except Exception as e:
             logging.info(f"Error fetching data for {keyword}", e)
-    driver.close()
+        driver.quit()
     logging.info("Done!")
 
 if __name__ == '__main__':
